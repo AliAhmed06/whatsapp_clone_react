@@ -1,7 +1,10 @@
 import { Avatar, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import './SideBar.css'
+
 import db from '../firebase';
+import { collection, query, onSnapshot } from "firebase/firestore";
+
 
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -12,14 +15,15 @@ import SideBarChat from './SideBarChat';
 const SideBar = () => {
   const [rooms, setRooms] = useState([]);
   useEffect(() => {
-    db.collection('rooms').onSnapshot(snapshot => (
+    const q = query(collection(db, "rooms"))
+    const unsub = onSnapshot(q, (snapshot) => {
         setRooms(snapshot.docs.map(doc => (
             {
                 id: doc.id,
                 data: doc.data()
             }
         )))
-    ))
+    });
   }, [])
   
   return (
