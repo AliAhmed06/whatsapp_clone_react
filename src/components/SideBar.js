@@ -11,9 +11,14 @@ import ChatIcon from '@mui/icons-material/Chat';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 import SideBarChat from './SideBarChat';
+import { useStateValue } from '../StateProvider';
+
+
 
 const SideBar = () => {
   const [rooms, setRooms] = useState([]);
+  const [{ user }, dispatch] = useStateValue();
+
   useEffect(() => {
     const q = query(collection(db, "rooms"))
     const unsub = onSnapshot(q, (snapshot) => {
@@ -29,7 +34,7 @@ const SideBar = () => {
   return (
     <div className="sidebar">
         <div className="sidebar_header">
-            <Avatar />
+            <Avatar src={`${user?.photoURL}`} />
             <div className="sidebar_headerRight">
                 <IconButton>
                     <DonutLargeIcon />

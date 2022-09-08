@@ -4,6 +4,7 @@ import './SideBarChat.css'
 
 import db from '../firebase'
 import { collection, addDoc } from "firebase/firestore"; 
+import { Link } from 'react-router-dom';
 
 const SideBarChat = ({ id, name, addNewChat }) => {
   const [seed, setSeed] = useState('');
@@ -23,13 +24,15 @@ const SideBarChat = ({ id, name, addNewChat }) => {
   }
   
   return !addNewChat ? (
-    <div className="sidebarChat">
-        <Avatar src={`https://avatars.dicebear.com/api/adventurer/${seed}.svg`} />
-        <div className="sidebarChat_info">
-            <h2>{name}</h2>
-            <p>Last Message...</p>
-        </div>
-    </div>
+    <Link to={`/rooms/${id}`}> 
+      <div className="sidebarChat">
+          <Avatar src={`https://avatars.dicebear.com/api/adventurer/${seed}.svg`} />
+          <div className="sidebarChat_info">
+              <h2>{name}</h2>
+              <p>Last Message...</p>
+          </div>
+      </div>
+    </Link>
   )
   :
   (
